@@ -124,16 +124,17 @@ if ($fileTmpLoc){
     
 }
 if ($i!=0){
-$sqlUpdate .=" where `Id`=$Id";
+$sqlUpdate .=" where `id`='$Id'";
 
 }else{
     $sqlUpdate="";
 }
 
+echo $sqlUpdate;
  
 if (strlen($sqlUpdate)>0){
   if (mysqli_query($conn, $sqlUpdate)) {
-header('Location:Modificar.php');
+//header('Location:Modificar.php');
 }else{
 
 }

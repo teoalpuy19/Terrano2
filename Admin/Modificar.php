@@ -1,3 +1,9 @@
+<?php session_start();
+if (isset($_SESSION['login_user'] )){
+}else{
+    header('Location:error.html',true,301);
+    exit();
+}?>
 <!DOCTYPE html>
 <html lang="en">
 

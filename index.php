@@ -32,6 +32,9 @@ if (mysqli_query($conn, $sql)){
              if ($Configuracion['id']==="phProductosPortada2"){
                 $phProductosPortada2 = $Configuracion['value'];
             }
+            if ($Configuracion['id']==="catalogo"){
+                $catalogoLink = $Configuracion['value'];
+            }
            
         }
         endif;
@@ -192,7 +195,7 @@ if (mysqli_query($conn, $sql)){
 					<div class="ms-slide" style="z-index: 10">
 				
 					<img src="<?php echo $phPortada2; ?> " data-src="<?php echo $phPortada2; ?> " alt="">
-					<a class="ms-layer btn-u btn-brd btn-brd-hover btn-u-light" style="left:15px; top:390px;" href="assets/Terrano/Catalogo2017.pdf"
+					<a class="ms-layer btn-u btn-brd btn-brd-hover btn-u-light" style="left:15px; top:390px;" href=<?php echo $catalogoLink ?>
 					data-effect="bottom(40)"
 					data-duration="2000"
 					data-delay="0"
@@ -240,7 +243,7 @@ if (mysqli_query($conn, $sql)){
 					<div class="illustration-bg">
 						<div class="illustration-ads ad-details-v1">
 							<h3>CATALOGO 2017</h3>
-							<a class="btn-u btn-brd btn-brd-hover btn-u-light" href="assets/Terrano/Catalogo2017.pdf">VER CATALOGO</a>
+							<a class="btn-u btn-brd btn-brd-hover btn-u-light" href=<?php echo $catalogoLink ?>>VER CATALOGO</a>
 						</div>
 					</div>
 				</div>
@@ -250,29 +253,84 @@ if (mysqli_query($conn, $sql)){
 	</div><!--/end row-->
         </div>
 	<!--=== End Illustration v1 ===-->
-                <!--=== Illustration v3 ===-->
-<!--                <div  id="footer" style="width: 150px;" ></div >-->
-                <iframe style="max-width: 1000px; height: 500px;" src="footer.html" allowtransparency="true" frameborder="0" scrolling="no"></iframe>
-             
-                
-                
-
-                
+                <!--=== Illustration v3 ===-->      
 	<!--=== End Illustration v3 ===-->
 
 
 </div>
 
-               
+                <div class="container content-md">
+<div id="footer-default" class="footer-default">
+			<div class="footer">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-4 md-margin-bottom-40">
+							<!-- About -->
+							<div class="headline"><h2>Sobre Nosotros</h2></div>
+							<p class="margin-bottom-25 md-margin-bottom-40">Somos una empresa que nace en el año 1991, como exportadora de artículos de cuero,
+                                                            basada en la calidad final de nuestros productos como principal atributo.</p>
+							<!-- End About -->
+
+							<!-- Monthly Newsletter -->
+                
+							<!-- End Monthly Newsletter -->
+						</div>
+
+						<div class="col-md-4 md-margin-bottom-40">
+							<!-- Recent Blogs -->
+							<div class="posts">
+								
+							
+								
+							</div>
+							<!-- End Recent Blogs -->
+						</div>
+
+						<div class="col-md-4">
+							<!-- Contact Us -->
+							<div class="headline"><h2>Contacto</h2></div>
+							<address class="md-margin-bottom-40">
+								Arenal grande 2123 <br />
+								Montevideo, Uruguay <br />
+								Telefono: 29244397 <br />
+								Email: <a href="mailto:terranoventas@gmail.com" class="">terranoventas@gmail.com</a>
+							</address>
+							<!-- End Contact Us -->
+
+							<!-- Social Links -->
+							<div class="headline"><h2>Conectate </h2></div>
+							<ul class="social-icons">
+								<li><a href="https://www.facebook.com/TerranoUruguay/?fref=ts" data-original-title="Facebook" class="social_facebook"></a></li>
+								
+
+							</ul>
+							<!-- End Social Links -->
+						</div><!--/col-md-4-->
+					</div>
+				</div>
+			</div><!--/footer-->
+
+			<div class="copyright">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-6">
+							<p>
+								2015 &copy; Unify. ALL Rights Reserved.
+								<a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+							</p>
+						</div>
+						<div class="col-md-6">
+							<a href="index..html">
+								<img class="pull-right" id="logo-footer" src="assets/Terrano/logo.png" alt="">
+							</a>
+						</div>
+					</div>
+				</div>
+			</div><!--/copyright-->
+		</div>
+    </div>
  
-<script>
-  
-   
-    
-    
-//     $("#footer").load("probar.html");
-document.getElementById("footer").innerHTML = '<object type="text/html" data="footer.html" ></object>';
-</script>
+
 <script>
  document.getElementById("myBtn").onclick = Subscribir;
 function Subscribir(){

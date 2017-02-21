@@ -8,7 +8,7 @@ if (isset($_SESSION['login_user'] )){
 <html lang="en">
     <?php
     include '../conexion.php';
-$sql = "select * from `Colores` ";
+$sql = "select * from `Config` ";
 $all_row = mysqli_query($conn, $sql);
 ?>
     <head>
@@ -77,7 +77,7 @@ $all_row = mysqli_query($conn, $sql);
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Cargar Colores </h3>
+                <h3>Adminstrar datos web </h3>
               </div>
 
 
@@ -99,51 +99,25 @@ $all_row = mysqli_query($conn, $sql);
                     </ul>
                     <div class="clearfix"></div>
                   </div>
-
-                    <form action="AddColores.php" method="post" enctype="multipart/form-data" class="form-horizontal form-label-left">
+                    <form name="menuForm" action="ModificarElementosWeb.php" method="post" enctype="multipart/form-data" class="form-horizontal form-label-left">
                       <br>
-                        <h3><strong>Agregar colores</strong></h3>
-                        <br>
-                      <p> Nombre </p> <input type="text" name="NombreColor">
-                      <input type="file" name="fileToUpload" id="fileToUpload">
-                      <input type="submit" value="AgregarColor" name="submit">
-                  </form>
-                    <div>
-                        <form  enctype="multipart/form-data" class="form-horizontal form-label-left">
-                        <br>
-                        <h3><strong>Eliminar colores</strong></h3>
-                        <br>
-                        <p> Colores</p><select id="ProdCol" name="ProdCol"  >
-                         <?php if(isset($all_row) && is_object($all_row) && count($all_row)): $i=1;?>
-					<?php foreach ($all_row as $key => $Colores) { ?>
-                         
-                                        <option  value=<?php echo $Colores['id']; ?>><?php echo $Colores['nombre']; ?></option>
-                        <?php } ?>
-								<?php endif; ?>
-				<?php $conn->close() ?>
-                                        </select>
-                                        <br>
-                                        <input onclick="Borrar()" type="submit" value="Eliminar " id="Eliminar" name="submit">
-                     </form>
-                        <form name="menuForm" action="ModificarColores.php" method="post" enctype="multipart/form-data" class="form-horizontal form-label-left">
-                      <br>
-                        <h3><strong>Modificar Colores</strong></h3>
+                        <h3><strong>Modificar Pagina</strong></h3>
                         <p> Colores</p><select id="ProdCol1" name="ProdCol1" onchange="changeTest()" >
                          <?php if(isset($all_row) && is_object($all_row) && count($all_row)): $i=1;?>
-					<?php foreach ($all_row as $key => $Colores) { ?>
+					<?php foreach ($all_row as $key => $Config) { ?>
                          
-                                        <option  value=<?php echo $Colores['id']; ?>><?php echo $Colores['nombre']; ?></option>
+                            <option data-valor="<?php echo $Config['value']; ?>" value=<?php echo $Config['id']."||".$Config['tipo']; ?>><?php echo $Config['descripcion']; ?></option>
                         <?php } ?>
 								<?php endif; ?>
-				<?php $conn->close() ?>
                          </select>
                         <br>
-                      <p> Nombre </p> <input type="text" name="NombreColor">
-                      <input type="text" name="ColorId"id="ColorId" >
+                        <p> Nombre </p> <textarea type="text" id="NombreConfig" name="ConfigValue"></textarea>
+                      <input type="text" name="ConfigId"id="ColorId" style="visibility: hidden;">
                       <input type="file" name="fileToUpload" id="fileToUpload"> 
-                      <input type="submit" value="Modificar Color" name="submit" id ="submitt" onclick="alert('Se modifico color correctamente');">
+                      <input type="submit" value="Modificar Color" name="submit" id ="submitt" >
                   </form>
-                    </div>
+                    
+                   
                 </div>
               </div>
               
@@ -157,45 +131,42 @@ $all_row = mysqli_query($conn, $sql);
         <!-- /footer content -->
       </div>
     </div>
+
       <script>
-          document.getElementById("ColorId").value = document.getElementById("ProdCol1").value
+           var sel = document.getElementById('ProdCol1');
+        var selected = sel.options[sel.selectedIndex];
+        var extra = selected.getAttribute('data-valor');
+           document.getElementById("NombreConfig").innerHTML = extra;
+           var x = document.getElementById("ProdCol1").value;
+           var aux =  x.split("||");
+           document.getElementById("ColorId").value = aux[0];
+           if (parseInt(aux[1])===1){
+                document.getElementById("NombreConfig").style.cssText = " visibility: visible;";
+               document.getElementById("fileToUpload").style.cssText = " visibility: hidden;";
+           }else{
+               document.getElementById("NombreConfig").style.cssText = " visibility: hidden;";
+               document.getElementById("fileToUpload").style.cssText = " visibility: visible;";
+           }
       function changeTest () { 
-          document.getElementById("ColorId").value = document.getElementById("ProdCol1").value;
+         var sel = document.getElementById('ProdCol1');
+        var selected = sel.options[sel.selectedIndex];
+        var extra = selected.getAttribute('data-valor');
+           var x = document.getElementById("ProdCol1").value;
+           var aux =  x.split("||");
+           document.getElementById("ColorId").value = aux[0];
+          if (parseInt(aux[1])===1){
+               document.getElementById("NombreConfig").innerHTML = extra;
+                document.getElementById("NombreConfig").style.cssText = " visibility: visible;"
+               document.getElementById("fileToUpload").style.cssText = " visibility: hidden;"
+           }else{
+               document.getElementById("NombreConfig").style.cssText = " visibility: hidden;"
+               document.getElementById("fileToUpload").style.cssText = " visibility: visible;"
+           }
+         
+          
          }
-      document.getElementById("Eliminar").onclick = Borrar;
-      function Borrar(){
-         if (confirm("Esta seguro que desea realizar esta accion?")){
-          var color=document.getElementById("ProdCol").value;
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("ajax_result").innerHTML = this.responseText;
-                }
-            };
-            xmlhttp.open("GET", "DeleteColores.php?Id="+color,true);
-            xmlhttp.send();
-          }
-        };
-
       </script>
-    <script>
-     var coloresguardar =[];
-     var colores = [];
-      function AgregarColor(){
-      $color = document.getElementById("ProdCol").value;
-      var a = colores.indexOf($color);
-      if (a ===-1){
-        colores.push($color);
-      document.getElementById("colores").value = colores;
-                }
-            }
-
-      function BorrarColor(){
-             colores.pop();
-              document.getElementById("colores").value = colores;
-      }
-      
-    </script>
+ 
    
     <!-- /Bootstrap Colorpicker -->
     <!-- Bootstrap -->
@@ -219,3 +190,4 @@ $all_row = mysqli_query($conn, $sql);
     <script src="../Admin/build/js/custom.min.js"></script>
   </body>
 </html>
+

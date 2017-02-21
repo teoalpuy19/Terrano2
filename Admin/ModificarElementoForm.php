@@ -1,8 +1,14 @@
+<?php session_start();
+if (isset($_SESSION['login_user'] )){
+}else{
+    header('Location:error.html',true,301);
+    exit();
+}?>
 <!DOCTYPE html>
 <html lang="en">
 <?php 
 include '../conexion.php';
-$sql = "select * from `Colores` ";
+$sql = "select * from `Colores` order by `nombre`";
 $colores = mysqli_query($conn, $sql);
 
 ?>

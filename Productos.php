@@ -106,9 +106,9 @@
 
 		<!--=== Breadcrumbs v3 ===-->
                
-                    <div class="breadcrumbs-v3 img-v1">
+                <div class="breadcrumbs-v3 " style="min-height: 110px; max-height: 150px;">
                         <div class="container text-center " style="margin-bottom: 1px;">
-				<p>Productos</p>
+				<p style="font-size: 80px;">Productos</p>
 				
 			</div><!--/end container-->
                     </div>
@@ -120,19 +120,22 @@
 
 		<div class="cube-portfolio container margin-bottom-60">
 			<div class="content-xs">
-				<form id="search_form" method="POST">
+			
 				<div id="filters-container" class="cbp-l-filters-text content-xs" >
-					<div class=" cbp-filter-item cbp-filter-item-active"> <a href="Productos.php"> Todos </a> </div>|
-					<div  name="sort" class="sort_rang cbp-filter-item"><a href="ProductoBilleteras.php">Billeteras</a></div>|
-					<div  name="sort" class="sort_rang cbp-filter-item"><a href="ProductosNecessaire.php">Necessaire</a></div>|
-					<div  name="sort" class="sort_rang cbp-filter-item"><a href="ProductosLineaMate.php">Línea Mate</a></div>|
-					<div  name="sort" class="sort_rang cbp-filter-item"><a href="ProductosLineaMorrales.php">Línea Morrales</a></div>|
-					<div  name="sort" class="sort_rang cbp-filter-item"><a href="ProductosEscritorioOcio.php">Escritorio-Ocio</a></div>|
+                                    
+					<div data-filter="*" class="cbp-filter-item" onclick="Hide();" >  Todos  </div>|
+                                        <div data-filter=".B" class="cbp-filter-item"id="Billeteras" onclick="Show();" > Billeteras </div> |
+					<div data-filter=".Mate" class="cbp-filter-item" onclick="Hide();">  Linea Mate  </div>|
+                                        <div data-filter=".Escritorio" class="cbp-filter-item" onclick="Hide();"> Escritorio-Ocio </div> |
+                                        <div data-filter=".Morrales" class="cbp-filter-item" onclick="Hide();"> Linea Morrales </div> |
+                                        <div data-filter=".Necessaire" class="cbp-filter-item" onclick="Hide();"> Necessaire </div> |
+                                        <br>
+                                        <div data-filter=".B2" class="cbp-filter-item" id="B2Filter">  Billeteras Dama  </div>|
+                                        <div data-filter=".B1" class="cbp-filter-item" id="B1Filter"> Billeteras Caballero</div> |
 				</div><!--/end Filters Container-->
-                <!--/end Filters Container-->
-					</form>
-
-			</div>
+                       
+                            
+                        
 	<div id="grid-container" class="cbp-l-grid-agency" >
 		<div id="ajax_result" >
 
@@ -145,19 +148,29 @@
 				?>
 				<?php if(isset($all_row) && is_object($all_row) && count($all_row)): $i=1;?>
 					<?php foreach ($all_row as $key => $Productos) { ?>
-
-						<div class="web-desing cbp-item "style="max-width: 380px;">
+                                           <?php $category= $Productos['Category'];
+                                           $sql = "SELECT * FROM `Categorias` where `id`= '$category'";
+						$all_row= mysqli_query($conn, $sql);
+                                               $config =  $all_row->fetch_assoc();
+                                              $dim =  explode(",", $config['dimension']);
+                                              
+                                              
+                                                ?>
+                                                <div class="web-desing cbp-item <?php if( $Productos['Category']=="B1" or$Productos['Category']=="B2"){
+                                                 echo "B  ";
+                                                 echo $Productos['Category'];
+                                                }else{echo $Productos['Category'];} ?>" style="max-width: 380px; min-width: 300px;">
 				
 									<div class="cbp-caption margin-bottom-20">
 										<div class="cbp-caption-defaultWrap">
-											<img src=<?php echo $Productos['ImageShow']; ?> style="height:240px; " alt="">
+											<img src=<?php echo $Productos['ImageShow']; ?> style="height:<?php echo $dim[0] ?>px;width:<?php echo $dim[1]; ?>px;margin:auto;" alt="">
 										</div>
 										<div class="cbp-caption-activeWrap">
 											<div class="cbp-l-caption-alignCenter">
 												<div class="cbp-l-caption-body">
 													<ul class="link-captions no-bottom-space">
 														<li><a href="single_item.php?Id=<?php echo $Productos['id'];?>"><i class="rounded-x fa fa-link"></i></a></li>
-														<li><a href=<?php echo $Productos['ImageShow']; ?> class="cbp-lightbox" data-title=<?php echo $Productos['Name']."-".$Productos['Cod']; ?>><i class="rounded-x fa fa-search"></i></a></li>
+														<li><a href=<?php echo $Productos['ImageShow']; ?> class="cbp-lightbox" data-title="<?php echo $Productos['Name']."-".$Productos['Cod']; ?>"><i class="rounded-x fa fa-search"></i></a></li>
 													</ul>
 												</div>
 											</div>
@@ -269,58 +282,18 @@
 	<!--=== End Style Switcher ===-->
 
 	<!-- JS Global Compulsory -->
-<Script>
-function Filtrar2(Str){
-	document.getElementById("ajax_result").innerHTML =
-	<?php
-	    $db=new mysqli('localhost','root','','Terrano');
-	    $Filtro=$_GET['sort'];
-	    if(isset($Filtro))
-	    	$sql="select * from `Producto` ";
-	    $all_row=$db->query($sql);
-	?>
-				<?php if(isset($all_row) && is_object($all_row) && count($all_row)): $i=1;?>
-						<div id="grid-container" class="cbp-l-grid-agency" >
-					<?php foreach ($all_row as $key => $Productos) { ?>
-				<div class="cbp-item web-design  ">
-									<div class="cbp-caption margin-bottom-20">
-										<div class="cbp-caption-defaultWrap">
-											<img src="uploads/mama.jpeg"alt="">
-										</div>
-										<div class="cbp-caption-activeWrap">
-											<div class="cbp-l-caption-alignCenter">
-												<div class="cbp-l-caption-body">
-													<ul class="link-captions no-bottom-space">
-														<li><a href=""><i class="rounded-x fa fa-link"></i></a></li>
-														<li><a href="" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
-													</ul>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="cbp-title-dark">
-										<div class="cbp-l-grid-agency-title">Design Object 02</div>
-										<div class="cbp-l-grid-agency-desc">Web Design</div>
-									</div>
-								</div>	<?php } ?>
-								</div>
-								<?php endif; ?>
-				<?php $db->close() ?>
-}
-</script>
-<script>
-function Filtrar(str) {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("ajax_result").innerHTML = this.responseText;
+        <script>
+            Hide();
+            function Show(){
+               document.getElementById("B2Filter").style.cssText = "visibility:visible;";
+                document.getElementById("B1Filter").style.cssText = "visibility:visible;";
             }
-        };
-        xmlhttp.open("GET", "ajax_product.php?sort="+str,true);
-        xmlhttp.send();
-    };
+            function Hide(){
+                 document.getElementById("B2Filter").style.cssText = "visibility:hidden;";
+                document.getElementById("B1Filter").style.cssText = "visibility:hidden;";
+            }
+        </script>
 
-</script>
         <script type="text/javascript" src="assets/js/Productos.js"></script>
 	<script type="text/javascript" src="assets/plugins/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="assets/plugins/jquery/jquery-migrate.min.js"></script>

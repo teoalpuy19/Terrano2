@@ -69,8 +69,8 @@ ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
 
 
 // if ($uploadOk <> 0){
-  $sql = "INSERT into Producto(Cod,Name,Category,Colores,Image,ImageShow,Thumbnail)
-Values ('$codigo','$nombre','$categoria','$Colores','','Admin/$resized_file','')";
+  $sql = "INSERT into Producto(Cod,Name,Category,Colores,ImageShow,Thumbnail)
+Values ('$codigo','$nombre','$categoria','$Colores','Admin/$resized_file','')";
 
   if (mysqli_query($conn, $sql)) {
     ?>

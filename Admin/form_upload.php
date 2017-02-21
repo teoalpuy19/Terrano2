@@ -1,11 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<?php 
+<?php session_start();
 include '../conexion.php';
-$sql = "select * from `Colores` ";
-$all_row = mysqli_query($conn, $sql);
+if (isset($_SESSION['login_user'] )){
+}else{
+    header('Location:error.html',true,301);
+    exit();
+}?>
 
-?>
+<!DOCTYPE html>
+<html lang="en"><?php
+
+$sql = "select * from `Colores` order by `nombre`" ;
+$all_row = mysqli_query($conn, $sql);?>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- Meta, title, CSS, favicons, etc. -->
@@ -96,7 +101,6 @@ $all_row = mysqli_query($conn, $sql);
                   </div>
 
 
-
                   <form action="AddProduct.php" method="post" enctype="multipart/form-data" class="form-horizontal form-label-left">
                       Select image to upload:
                       <p> Nombre producto</p> <input type="text" name="ProdName">
@@ -127,6 +131,7 @@ $all_row = mysqli_query($conn, $sql);
                   </form>
                      <button  onclick="AgregarColor()" id="AgregarColor">Agregar Color</button> <button  onclick="BorrarColor()" id="AgregarColor">Borrar Color</button>
 
+                     
 
                 </div>
               </div>

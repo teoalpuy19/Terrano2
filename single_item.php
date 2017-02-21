@@ -13,8 +13,6 @@
     if ($conn->query($sql)){
           $resultado =    $conn->query($sql);
          $row = $resultado->fetch_assoc();
-    }else {
-        echo "todomall";
     }
     ?>
 
@@ -177,6 +175,7 @@
 						</h3>
                                          <h3 class="shop-product-title"><?php echo "<strong>Codigo:</strong> ".$row['Cod']; ?>
 						</h3>
+                                            <?php if (strlen($row['colores'])>0){ ?>
 					<h3 class="shop-product-title">Colores</h3>
 						<ul class="list-inline product-color margin-bottom-30">
                                                      <?php if(isset($all_row) && is_object($all_row) && count($all_row)): $i=1;?>
@@ -199,9 +198,10 @@
 				<?php  ?>
 						</ul><!--/end product color-->
 				</div>
+                                            <?php }?>
 				<!-- End Content Info -->
 			</div><!--/row-->
-
+                        
 			
 
 			<div class="margin-bottom-20 clearfix"></div>
